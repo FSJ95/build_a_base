@@ -1,0 +1,1 @@
+INSERT INTO insert.tsv (titleId, region) VALUES (val1, val2)

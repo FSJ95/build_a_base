@@ -42,7 +42,7 @@ public class Sql{
 					*/
 					Select select = new Select();
 					select.readTable(statement, defaultconf);
-					select.printResult();	
+					select.printResult();
 				}
 				else if(line.startsWith("COLUMNNAMES"))
 				{
@@ -55,8 +55,17 @@ public class Sql{
 				else if(line.startsWith("HELP")){
 					System.out.println("Commands: CHARSET=charset, QUIT, SELECT [columns[]] FROM [tablename] WHERE [conditions] LIMIT [int], COLUMNNAMES [TABLE]");
 				}
+				else if(line.startsWith("INSERT INTO "))
+				{
+					Statement statement = new Statement(line);
+					statement.parseInsert();
+					Table table = new Table();
+					table.readColumnNames(statement, defaultconf);
+					Insert insert = new Insert(statement);
+					insert.insertIntoTable(table);
+				}
 			}
-			
+
 		}
 	}
 }

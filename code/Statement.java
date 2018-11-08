@@ -11,6 +11,9 @@ public class Statement{
 	public boolean checkcond;
 	public ArrayList<Condition> conditions = new ArrayList<Condition>();
 	public int limit;
+	public ArrayList<String> values;
+	public String valuesString;
+	public Row rowToInsert;
 
 	public Statement(String fullStr)
 	{
@@ -60,6 +63,33 @@ public class Statement{
 				this.limit = Integer.parseInt(this.fullStr.substring(this.fullStr.indexOf("LIMIT")+6));
 			}
 
+	}
+	public void parseInsert(){
+		if(checkKeywordSyntax("INTO", 4)
+		&& this.fullStr.contains("VALUES (")
+		&& this.checkKeywordSyntax("(", 2)
+		&& this.fullStr.contains(")")){
+			this.indexOfTable = 12;
+			this.table = this.fullStr.substring(this.indexOfTable, (this.fullStr.indexOf("("))-1);
+			this.columnsString = this.fullStr.substring(this.fullStr.indexOf("(")+1, this.fullStr.indexOf(")"));
+			this.valuesString = this.fullStr.substring(this.fullStr.indexOf("VALUES (")+8, this.fullStr.lastIndexOf(")"));
+			this.columns = new ArrayList<String>(Arrays.asList(columnsString.split("\\, ")));
+			this.values = new ArrayList<String>(Arrays.asList(valuesString.split("\\, ")));
+			if(this.columns.size() == this.values.size()){
+				this.rowToInsert = new Row();
+				for(int i = 0;i<this.columns.size();i++)
+				{
+					Column column = new Column(this.columns.get(i), this.values.get(i));
+					this.rowToInsert.columns.add(column);
+				}
+			}
+		}
+	}
+	public void printInsert()
+	{
+		System.out.println("Table: "+this.table);
+		System.out.println("columnsString: "+this.columnsString);
+		System.out.println("valuesString: "+this.valuesString);
 	}
 	public void parseWhere()
 	{
