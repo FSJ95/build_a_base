@@ -12,7 +12,7 @@ public class Sql{
 			code = conin.nextLine().split("\\;");
 			for(String line : code)
 			{
-				if(line.equals("QUIT") || line.equals("exit")){
+				if(line.equalsIgnoreCase("QUIT") || line.equalsIgnoreCase("exit")){
 					quit = true;
 				}
 				else if(line.startsWith("CHARSET="))
@@ -42,7 +42,7 @@ public class Sql{
 					*/
 					Select select = new Select();
 					select.readTable(statement, defaultconf);
-					select.printResult();	
+					select.printResult();
 				}
 				else if(line.startsWith("COLUMNNAMES"))
 				{
@@ -56,7 +56,7 @@ public class Sql{
 					System.out.println("Commands: CHARSET=charset, QUIT, SELECT [columns[]] FROM [tablename] WHERE [conditions] LIMIT [int], COLUMNNAMES [TABLE]");
 				}
 			}
-			
+
 		}
 	}
 }
