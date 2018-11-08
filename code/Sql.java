@@ -12,7 +12,7 @@ public class Sql{
 			code = conin.nextLine().split("\\;");
 			for(String line : code)
 			{
-				if(line.equals("QUIT") || line.equals("exit")){
+				if(line.equalsIgnoreCase("QUIT") || line.equalsIgnoreCase("EXIT")){
 					quit = true;
 				}
 				else if(line.startsWith("CHARSET="))
@@ -23,9 +23,10 @@ public class Sql{
 				else if(line.startsWith("SELECT"))
 				{
 					Statement statement = new Statement(line);
-					statement.parseLimit();
-					statement.parseWhere();
 					statement.parseSelect();
+					Select select = new Select(statement, defaultconf);
+					select.readTable();
+					select.printResult();
 					/*
 					System.out.println(statement.limit);
 					for(String condition : statement.conditionsStrings)
@@ -39,10 +40,19 @@ public class Sql{
 						System.out.println(condition.conditionArr[0]);
 						System.out.println(condition.conditionArr[1]);
 					}
-					*/
+
 					Select select = new Select();
 					select.readTable(statement, defaultconf);
 					select.printResult();
+<<<<<<< HEAD
+=======
+					*/
+				}
+				else if(line.startsWith("DELETE"))
+				{
+					Statement statement = new Statement(line);
+					statement.parseDelete();
+>>>>>>> e96d13602b3518419834120754bab8984a3b7547
 				}
 				else if(line.startsWith("COLUMNNAMES"))
 				{

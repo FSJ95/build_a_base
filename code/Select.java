@@ -3,14 +3,20 @@ import java.io.*;
 public class Select{
 	public ArrayList<ArrayList<String>> result = new ArrayList<ArrayList<String>>();
 	public ArrayList<String> matchedColumns = new ArrayList<String>();
-
+	public Statement statement;
+	public Config config;
+	public Select (Statement statement, Config config)
+	{
+		this.statement = statement;
+		this.config = config;
+	}
 	public void where(Statement statement){
 		
 	}
 	public void readColumns(Statement statement, Config config){
 		
 	}
-	public void readTable(Statement statement, Config config){
+	public void readTable(){
 		File fileToRead = new File(statement.table);
 		try
 		{

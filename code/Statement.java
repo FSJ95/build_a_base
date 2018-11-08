@@ -30,28 +30,17 @@ public class Statement{
 			this.table = this.fullStr.substring("COLUMNNAMES".length()+1);
 		}
 	}
-	public void parseSelect()
+	public void parseFrom()
 	{
-		if(checkKeywordSyntax("FROM", 2))
-		{
-			//Creates a substring of the statement of the columns, expecting a whitespace after SELLECT
-			this.columnsString = this.fullStr.substring(6, this.fullStr.indexOf("FROM"));
-			//Splits the columns with , and a whitespace
-			this.columns = new ArrayList<String>(Arrays.asList(columnsString.split("\\, ")));
+		if(checkKeywordSyntax("FROM", 2)){
 			//Saves the index of TALBE name
 			this.indexOfTable = this.fullStr.indexOf("FROM") + 5;
 
 			this.table = this.fullStr.substring(indexOfTable);
 			if((this.table).contains(" "))
-				this.table = this.table.substring(0, this.table.indexOf(" "));
+				this.table = this.table.substring(0, this.table.indexOf(" "));	
 		}
-	}
-	public boolean checkKeywordSyntax(String keyword, int charsLonger)
-	{
-		if(this.fullStr.contains(keyword))
-			if(this.fullStr.length() > (this.fullStr.indexOf(keyword)+keyword.length()+charsLonger))
-				return true;
-		return false;
+		
 	}
 	public void parseLimit()
 	{
@@ -106,6 +95,32 @@ public class Statement{
 				this.checkcond = true;
 			}
 		}
+	}
+	public void parseSelect()
+	{
+		if(checkKeywordSyntax("FROM", 2))
+		{
+			this.parseFrom();
+			//Creates a substring of the statement of the columns, expecting a whitespace after SELLECT
+			this.columnsString = this.fullStr.substring(6, this.fullStr.indexOf("FROM"));
+			//Splits the columns with , and a whitespace
+			this.columns = new ArrayList<String>(Arrays.asList(columnsString.split("\\, ")));
+			this.parseWhere();
+			this.parseLimit();
+		}
+	}
+	public void parseDelete()
+	{
+		this.parseFrom();
+		this.parseWhere();
+		this.parseLimit();
+	}
+	public boolean checkKeywordSyntax(String keyword, int charsLonger)
+	{
+		if(this.fullStr.contains(keyword))
+			if(this.fullStr.length() > (this.fullStr.indexOf(keyword)+keyword.length()+charsLonger))
+				return true;
+		return false;
 	}
 	public void printWhereCond()
 	{
