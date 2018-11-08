@@ -23,26 +23,15 @@ public class Sql{
 				else if(line.startsWith("SELECT"))
 				{
 					Statement statement = new Statement(line);
-					statement.parseLimit();
-					statement.parseWhere();
 					statement.parseSelect();
-					/*
-					System.out.println(statement.limit);
-					for(String condition : statement.conditionsStrings)
-					{
-						System.out.println(condition);
-					}
-					for(Condition condition : statement.conditions)
-					{
-						System.out.println(condition.operator);
-						System.out.println(condition.typeOfCondition);
-						System.out.println(condition.conditionArr[0]);
-						System.out.println(condition.conditionArr[1]);
-					}
-					*/
-					Select select = new Select();
-					select.readTable(statement, defaultconf);
+					Select select = new Select(statement, defaultconf);
+					select.readTable();
 					select.printResult();	
+				}
+				else if(line.startsWith("DELETE"))
+				{
+					Statement statement = new Statement(line);
+					statement.parseDelete();
 				}
 				else if(line.startsWith("COLUMNNAMES"))
 				{
