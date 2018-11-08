@@ -24,11 +24,9 @@ public class Sql{
 				{
 					Statement statement = new Statement(line);
 					statement.parseSelect();
-<<<<<<< HEAD
 					Select select = new Select(statement, defaultconf);
 					select.readTable();
 					select.printResult();	
-=======
 					/*
 					System.out.println(statement.limit);
 					for(String condition : statement.conditionsStrings)
@@ -42,11 +40,11 @@ public class Sql{
 						System.out.println(condition.conditionArr[0]);
 						System.out.println(condition.conditionArr[1]);
 					}
-					*/
+					
 					Select select = new Select();
 					select.readTable(statement, defaultconf);
 					select.printResult();
->>>>>>> master
+					*/
 				}
 				else if(line.startsWith("DELETE"))
 				{
