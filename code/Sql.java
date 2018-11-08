@@ -12,7 +12,7 @@ public class Sql{
 			code = conin.nextLine().split("\\;");
 			for(String line : code)
 			{
-				if(line.equals("QUIT") || line.equals("exit")){
+				if(line.equalsIgnoreCase("QUIT") || line.equalsIgnoreCase("exit")){
 					quit = true;
 				}
 				else if(line.startsWith("CHARSET="))
@@ -24,9 +24,29 @@ public class Sql{
 				{
 					Statement statement = new Statement(line);
 					statement.parseSelect();
+<<<<<<< HEAD
 					Select select = new Select(statement, defaultconf);
 					select.readTable();
 					select.printResult();	
+=======
+					/*
+					System.out.println(statement.limit);
+					for(String condition : statement.conditionsStrings)
+					{
+						System.out.println(condition);
+					}
+					for(Condition condition : statement.conditions)
+					{
+						System.out.println(condition.operator);
+						System.out.println(condition.typeOfCondition);
+						System.out.println(condition.conditionArr[0]);
+						System.out.println(condition.conditionArr[1]);
+					}
+					*/
+					Select select = new Select();
+					select.readTable(statement, defaultconf);
+					select.printResult();
+>>>>>>> master
 				}
 				else if(line.startsWith("DELETE"))
 				{
@@ -45,7 +65,7 @@ public class Sql{
 					System.out.println("Commands: CHARSET=charset, QUIT, SELECT [columns[]] FROM [tablename] WHERE [conditions] LIMIT [int], COLUMNNAMES [TABLE]");
 				}
 			}
-			
+
 		}
 	}
 }
