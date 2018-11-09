@@ -38,9 +38,9 @@ public class Statement{
 
 			this.table = this.fullStr.substring(indexOfTable);
 			if((this.table).contains(" "))
-				this.table = this.table.substring(0, this.table.indexOf(" "));	
+				this.table = this.table.substring(0, this.table.indexOf(" "));
 		}
-		
+
 	}
 	public void parseLimit()
 	{
@@ -111,9 +111,11 @@ public class Statement{
 	}
 	public void parseDelete()
 	{
-		this.parseFrom();
-		this.parseWhere();
-		this.parseLimit();
+		if(checkKeywordSyntax("DELETE FROM", 2)){
+			this.parseFrom();
+			this.parseWhere();
+			this.parseLimit();
+		}
 	}
 	public boolean checkKeywordSyntax(String keyword, int charsLonger)
 	{
