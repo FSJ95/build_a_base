@@ -68,7 +68,7 @@ public class Sql{
 				else if(line.startsWith("HELP")){
 					System.out.println("Commands: CHARSET=charset, QUIT, SELECT [columns[]] FROM [tablename] WHERE [conditions] LIMIT [int], COLUMNNAMES [TABLE]");
 				}
-				else if(line.startsWith("INSERT INTO "))
+				else if(line.startsWith("INSERT INTO"))
 				{
 					Statement statement = new Statement(line);
 					statement.parseInsert();
@@ -76,6 +76,13 @@ public class Sql{
 					table.readColumnNames(statement, defaultconf);
 					Insert insert = new Insert(statement);
 					insert.insertIntoTable(table);
+				}
+				else if(line.startsWith("UPDATE"))
+				{
+					Statement statement = new Statement(line);
+					statement.parseUpdate();
+					Update update = new Update(statement, defaultconf);
+				  update.updateRow();
 				}
 			}
 
