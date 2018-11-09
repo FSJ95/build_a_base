@@ -44,12 +44,24 @@ public class Sql{
 					Select select = new Select();
 					select.readTable(statement, defaultconf);
 					select.printResult();
+<<<<<<< HEAD
+=======
+
+>>>>>>> bac36ccec48f0b5d9ec7207f2aa385c5be316e0b
 					*/
 				}
 				else if(line.startsWith("DELETE"))
 				{
+<<<<<<< HEAD
 					Statement statement = new Statement(line);
 					statement.parseDelete();
+=======
+				  Statement statement = new Statement(line);
+				  statement.parseDelete();
+				  Delete delete = new Delete(statement, defaultconf);
+				  delete.deleteRow();
+				  delete.printResult();
+>>>>>>> bac36ccec48f0b5d9ec7207f2aa385c5be316e0b
 				}
 				else if(line.startsWith("COLUMNNAMES"))
 				{
