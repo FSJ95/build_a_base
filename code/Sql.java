@@ -27,35 +27,13 @@ public class Sql{
 					Select select = new Select(statement, defaultconf);
 					select.readTable();
 					select.printResult();
-					/*
-					System.out.println(statement.limit);
-					for(String condition : statement.conditionsStrings)
-					{
-						System.out.println(condition);
-					}
-					for(Condition condition : statement.conditions)
-					{
-						System.out.println(condition.operator);
-						System.out.println(condition.typeOfCondition);
-						System.out.println(condition.conditionArr[0]);
-						System.out.println(condition.conditionArr[1]);
-					}
-
-					Select select = new Select();
-					select.readTable(statement, defaultconf);
-					select.printResult();
-
-
-					*/
 				}
 				else if(line.startsWith("DELETE"))
 				{
-
 					Statement statement = new Statement(line);
 					statement.parseDelete();
-				  Delete delete = new Delete(statement, defaultconf);
-				  delete.deleteRow();
-
+					Delete delete = new Delete(statement, defaultconf);
+					delete.deleteRow();
 				}
 				else if(line.startsWith("COLUMNNAMES"))
 				{
@@ -66,7 +44,14 @@ public class Sql{
 					table.printColumnNames();
 				}
 				else if(line.startsWith("HELP")){
-					System.out.println("Commands: CHARSET=charset, QUIT, SELECT [columns[]] FROM [tablename] WHERE [conditions] LIMIT [int], COLUMNNAMES [TABLE]");
+					System.out.println("Commands: ");
+					System.out.println("CHARSET=charset");
+					System.out.println("QUIT");
+					System.out.println("SELECT [columns[]] FROM [tablename] WHERE [conditions] LIMIT [int]");
+					System.out.println("INSERT INTO [tablename] ([Column], [Column]...) VALUES ([Value], [Value]...)");
+					System.out.println("DELETE FROM [tablename] WHERE [conditions]");
+					System.out.println("COLUMNNAMES [TABLE]");
+
 				}
 				else if(line.startsWith("INSERT INTO "))
 				{
