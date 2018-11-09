@@ -11,10 +11,10 @@ public class Select{
 		this.config = config;
 	}
 	public void where(Statement statement){
-		
+
 	}
 	public void readColumns(Statement statement, Config config){
-		
+
 	}
 	public void readTable(){
 		File fileToRead = new File(statement.table);
@@ -49,9 +49,9 @@ public class Select{
 				{
 					//boolean whereMatch = false;
 					BitSet matchBitSet = new BitSet(statement.conditions.size());
-					
+
 					matchBitSet.clear();
-					
+
 					//Creates an array of the data in the current line creating an array of strings seperated by tabs on the line (removing the tabs)
 					String[] fullRow = sctable.nextLine().split("\\t");
 					//Creates an empty list to add the data that matches the criteria of the statement
@@ -64,7 +64,7 @@ public class Select{
 						if(columnsToInsertIndex.contains(i))
 						{
 							trimmedStr+=column.value;
-							trimmedRow.add(column.value);	
+							trimmedRow.add(column.value);
 						}
 						//Conditioning logic which looks through each condition in the statement & if it matches it'll set whereMatch to true
 						int j;
@@ -104,15 +104,5 @@ public class Select{
 				System.out.println();
 		}
 	}
-	public void createExample(){
-		int i, j;
-		for(i = 0; i<10;i++){
-			ArrayList<String> row = new ArrayList<String>();
-			for(j=0;j<3;j++){
-				row.add(j, Integer.toString(j*i));
-			}
-			this.result.add(i, row);
-		}
-		
-	}
+
 }
