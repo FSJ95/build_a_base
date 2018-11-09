@@ -45,14 +45,17 @@ public class Sql{
 					select.readTable(statement, defaultconf);
 					select.printResult();
 
+
 					*/
 				}
 				else if(line.startsWith("DELETE"))
 				{
-				  Statement statement = new Statement(line);
-				  statement.parseDelete();
+
+					Statement statement = new Statement(line);
+					statement.parseDelete();
 				  Delete delete = new Delete(statement, defaultconf);
 				  delete.deleteRow();
+
 				}
 				else if(line.startsWith("COLUMNNAMES"))
 				{
