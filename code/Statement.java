@@ -3,11 +3,12 @@ public class Statement{
 
 	public String fullStr;
 	public String columnsString;
-	public ArrayList<String> columns;
+	public ArrayList<String> columns = new ArrayList<String>();
 	public int indexOfTable;
 	public String table;
 	public String whereString;
 	public ArrayList<String> conditionsStrings;
+	public ArrayList<Column> updateColumns;
 	public boolean checkcond;
 	public ArrayList<Condition> conditions = new ArrayList<Condition>();
 	public int limit;
@@ -82,7 +83,7 @@ public class Statement{
 	}
 	public void parseWhere()
 	{
-		if(checkKeywordSyntax("WHERE", 4)){
+		if(checkKeywordSyntax("WHERE", 3)){
 			this.whereString = this.fullStr.substring(this.fullStr.indexOf("WHERE")+6);
 			if(this.whereString.contains("LIMIT")){
 				this.whereString = this.whereString.substring(0, this.whereString.indexOf("LIMIT"));
@@ -115,6 +116,30 @@ public class Statement{
 			this.parseFrom();
 			this.parseWhere();
 			this.parseLimit();
+		}
+	}
+	public void parseUpdate()
+	{
+		if(checkKeywordSyntax("UPDATE", 2)){
+		  if(checkKeywordSyntax("SET", 4))
+			{
+				this.table = this.fullStr.substring(7, this.fullStr.indexOf("SET")-1);
+				if(this.fullStr.contains("WHERE")){
+					this.columnsString = this.fullStr.substring(this.fullStr.indexOf("SET")+4, this.fullStr.indexOf("WHERE"));
+				}
+				else{
+					this.columnsString = this.fullStr.substring(this.fullStr.indexOf("SET")+4);
+				}
+				this.columns = new ArrayList<String>(Arrays.asList(this.columnsString.split("\\, ")));
+
+				for(String columnStr: this.columns){
+					String setArr[] = columnStr.split("=");
+					Column columnToAdd = new Column(setArr[0], setArr[1]);
+					this.updateColumns.add(columnToAdd);
+				}
+				this.parseWhere();
+				this.parseLimit();
+			}
 		}
 	}
 	public boolean checkKeywordSyntax(String keyword, int charsLonger)
