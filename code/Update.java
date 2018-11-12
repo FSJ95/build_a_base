@@ -14,16 +14,10 @@ public class Update
 
 	public void updateRow()
 	{
-		System.out.println(this.statement.table);
-    for(String column: this.statement.columns)
-      System.out.println(column);
-    /*
-    System.out.println(this.statement.updateColumns);
-    */
+	System.out.println(this.statement.table);
+    for(Column column: this.statement.updateColumns){
+    	System.out.println("Name: "+column.name+" Value: "+column.value);
+    }
     System.out.println(this.statement.whereString);
 	}
-
-
-
-
 }

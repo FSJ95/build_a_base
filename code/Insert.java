@@ -13,7 +13,7 @@ public class Insert
       output = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(path), StandardCharsets.UTF_8));
       */
       String lineToWrite = "";
-      for(int i = 0; i<table.columns.size();i++){
+      for(int i = 0; i<table.columnNames.size();i++){
         String columnValue = "\\N";
         if(i!=0){
           lineToWrite += "\t";
@@ -21,7 +21,7 @@ public class Insert
         //System.out.println("Table column: "+table.columns.get(i));
         for(Column column : statement.rowToInsert.columns){
           //System.out.println("Insert Column: "+column.name);
-          if(table.columns.get(i).equals(column.name)){
+          if(table.columnNames.get(i).equals(column.name)){
 
             columnValue = column.value;
           }

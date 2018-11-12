@@ -5,6 +5,7 @@ public class Select{
 	public ArrayList<String> matchedColumns = new ArrayList<String>();
 	public Statement statement;
 	public Config config;
+	public Table selectResult = new Table();
 	public Select (Statement statement, Config config)
 	{
 		this.statement = statement;
@@ -41,7 +42,8 @@ public class Select{
 						if(fileColumns[i].equals(column)){
 							//Adds index of column and name of it to seperate arrays/lists for later use
 							columnsToInsertIndex.add(i);
-							matchedColumns.add(column);
+							//matchedColumns.add(column);
+							this.selectResult.columnNames.add(column);
 						}
 					}
 				}
@@ -55,16 +57,20 @@ public class Select{
 					//Creates an array of the data in the current line creating an array of strings seperated by tabs on the line (removing the tabs)
 					String[] fullRow = sctable.nextLine().split("\\t");
 					//Creates an empty list to add the data that matches the criteria of the statement
-					ArrayList<String> trimmedRow = new ArrayList<String>();
-					String trimmedStr = "";
+					//ArrayList<String> trimmedRow = new ArrayList<String>();
+					Row rowToAdd = new Row();
+					//String trimmedStr = "";
 					for(i=0;i<fullRow.length;i++)
 					{
 						Column column = new Column(fileColumns[i], fullRow[i], i);
 						//Checks if the index of the loop is in the columns selected, if it is it'll add it to the trimmed row
 						if(columnsToInsertIndex.contains(i))
 						{
+							rowToAdd.columns.add(column);
+							/*
 							trimmedStr+=column.value;
 							trimmedRow.add(column.value);
+							*/
 						}
 						//Conditioning logic which looks through each condition in the statement & if it matches it'll set whereMatch to true
 						int j;
@@ -79,7 +85,8 @@ public class Select{
 					}
 					if(matchBitSet.cardinality() == statement.conditions.size())
 					{
-						result.add(trimmedRow);
+						this.selectResult.rows.add(rowToAdd);
+						//result.add(trimmedRow);
 						statement.limit--;
 					}
 				}
@@ -92,6 +99,8 @@ public class Select{
 	}
 
 	public void printResult(){
+		this.selectResult.printColumnNames();
+		/*
 		for(ArrayList<String> row : this.result){
 			boolean emptyRow = true;
 			for(String column : row){
@@ -102,6 +111,11 @@ public class Select{
 			}
 			if(!emptyRow)
 				System.out.println();
+		}
+		*/
+		for(Row row : this.selectResult.rows)
+		{
+			row.printRowValues();
 		}
 	}
 

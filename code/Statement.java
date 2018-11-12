@@ -8,7 +8,7 @@ public class Statement{
 	public String table;
 	public String whereString;
 	public ArrayList<String> conditionsStrings;
-	public ArrayList<Column> updateColumns;
+	public ArrayList<Column> updateColumns = new ArrayList<Column>();
 	public boolean checkcond;
 	public ArrayList<Condition> conditions = new ArrayList<Condition>();
 	public int limit;
@@ -124,18 +124,17 @@ public class Statement{
 		  if(checkKeywordSyntax("SET", 4))
 			{
 				this.table = this.fullStr.substring(7, this.fullStr.indexOf("SET")-1);
-				if(this.fullStr.contains("WHERE")){
-					this.columnsString = this.fullStr.substring(this.fullStr.indexOf("SET")+4, this.fullStr.indexOf("WHERE"));
-				}
-				else{
-					this.columnsString = this.fullStr.substring(this.fullStr.indexOf("SET")+4);
+				this.columnsString = this.fullStr.substring(this.fullStr.indexOf("SET")+5, this.fullStr.length()-1);
+				if(this.columnsString.contains("WHERE")){
+					this.columnsString = this.columnsString.substring(0, this.columnsString.indexOf("WHERE")-2);
 				}
 				this.columns = new ArrayList<String>(Arrays.asList(this.columnsString.split("\\, ")));
-
 				for(String columnStr: this.columns){
-					String setArr[] = columnStr.split("=");
-					Column columnToAdd = new Column(setArr[0], setArr[1]);
-					this.updateColumns.add(columnToAdd);
+					String setArr[] = columnStr.split("\\=");
+					if(setArr.length>1){
+						Column columnToAdd = new Column(setArr[0], setArr[1]);
+						this.updateColumns.add(columnToAdd);
+					}	
 				}
 				this.parseWhere();
 				this.parseLimit();

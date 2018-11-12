@@ -67,7 +67,7 @@ public class Sql{
 					Statement statement = new Statement(line);
 					statement.parseUpdate();
 					Update update = new Update(statement, defaultconf);
-				  update.updateRow();
+					update.updateRow();
 				}
 			}
 

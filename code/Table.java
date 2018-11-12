@@ -1,8 +1,8 @@
 import java.util.*;
 import java.io.*;
 public class Table{
-	public ArrayList<String> columns = new ArrayList<String>();
-
+	public ArrayList<String> columnNames = new ArrayList<String>();
+	public ArrayList<Row> rows = new ArrayList<Row>();
 
 	public void readColumnNames(Statement statement, Config config){
 		//System.out.println("test");
@@ -13,7 +13,7 @@ public class Table{
 			{
 				String row = sctable.nextLine();
 
-				this.columns = new ArrayList<String>(Arrays.asList(row.split("\t")));
+				this.columnNames = new ArrayList<String>(Arrays.asList(row.split("\t")));
 			}
 			
 		}
@@ -24,11 +24,12 @@ public class Table{
 
 	public void printColumnNames()
 	{
-		for(String column : columns)
+		for(String column : columnNames)
 		{
 			if(!column.isEmpty()){	
-				System.out.println(" " + column + " ");
+				System.out.print("|" + column + "|");
 			}
 		}
+		System.out.println();
 	}
 }
