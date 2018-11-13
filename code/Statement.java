@@ -173,7 +173,7 @@ public class Statement{
 					if(setArr.length>1){
 						Column columnToAdd = new Column(setArr[0], setArr[1]);
 						this.updateColumns.add(columnToAdd);
-					}	
+					}
 				}
 				this.parseWhere();
 				this.parseLimit();

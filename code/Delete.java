@@ -18,12 +18,12 @@ public class Delete
 		File tempWriteFile = new File(this.statement.table+".tmp");
 		//System.out.println(this.statement.table);
 		//System.out.println(this.statement.limit);
-		/*
+
 		for(Condition condition : this.statement.conditions){
 			System.out.println("column: "+condition.conditionArr[0]);
 			System.out.println("value: "+condition.conditionArr[1]);
 		}
-		*/
+
 		try{
 			Scanner sctable = new Scanner(fileToRead, config.getCharset());
 			BufferedWriter writer = new BufferedWriter(new FileWriter(tempWriteFile));
