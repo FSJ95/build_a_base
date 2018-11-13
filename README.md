@@ -12,10 +12,22 @@ Run following command to start the program:
 ```
 $ java Sql
 ```
-It is now possible to run a set of commands:
+Type "HELP" to see possible commands:
 ```
-$ HELP
+$ HELP //Tells you possible commands.
+Commands: 
+CHARSET=charset
+QUIT
+SELECT [Column],... FROM [tablename] [LEFT JOIN [tablename] ON [tablename]$[column]= [tablename]$[column] ...] WHERE [conditions] LIMIT [int]
+INSERT INTO [tablename] ([Column], [Column]...) VALUES ([Value], [Value]...)
+DELETE FROM [tablename] WHERE [conditions]
+COLUMNNAMES [TABLE]
 ```
+Type "EXIT" to exit the program:
+```
+$ EXIT
+```
+# Command examples
 ```
 $ CREATE
 ```
@@ -31,6 +43,4 @@ $ SELECT
 ```
 $ INSERT
 ```
-```
-$ EXIT
-```
+
