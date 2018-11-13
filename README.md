@@ -1,5 +1,46 @@
 # build_a_base
 Modulopgave 3 - IMDB datafiler
 
-Design: 
-> https://docs.google.com/document/d/1wuY8sbnWzIdG38jyOWRpmTk-1TOCbmY1LSkVNV2fpSY/edit?fbclid=IwAR3jiH3bkvRdyppE8JOBb2hO8di5Wl4m-EOtrI1SQjqjiitvErL1eZ9C1qg
+# How to build
+Go to the code folder and type following command:
+```
+$ javac Sql.java
+```
+
+# How to run
+Run following command to start the program:
+```
+$ java Sql
+```
+Type "HELP" to see possible commands:
+```
+$ HELP //Tells you possible commands.
+Commands: 
+CHARSET=charset
+QUIT
+SELECT [Column],... FROM [tablename] [LEFT JOIN [tablename] ON [tablename]$[column]= [tablename]$[column] ...] WHERE [conditions] LIMIT [int]
+INSERT INTO [tablename] ([Column], [Column]...) VALUES ([Value], [Value]...)
+DELETE FROM [tablename] WHERE [conditions]
+COLUMNNAMES [TABLE]
+```
+Type "EXIT" to exit the program:
+```
+$ EXIT
+```
+# Command examples
+```
+$ CREATE
+```
+```
+$ DELETE
+```
+```
+$ UPDATE
+```
+```
+$ SELECT 
+```
+```
+$ INSERT
+```
+
