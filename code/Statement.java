@@ -15,6 +15,7 @@ public class Statement{
 	public ArrayList<String> values;
 	public String valuesString;
 	public Row rowToInsert;
+	public ArrayList<Join> joinBlocks = new ArrayList<Join>();
 
 	public Statement(String fullStr)
 	{
@@ -94,6 +95,44 @@ public class Statement{
 				Condition condition = new Condition(conditionsStr);
 				this.conditions.add(condition);
 				this.checkcond = true;
+			}
+		}
+	}
+	public void parseInnerJoin(){
+		if(checkKeywordSyntax("INNER JOIN", 2) && checkKeywordSyntax("ON", 10))
+		{
+			String joinStr = this.fullStr.substring(this.fullStr.indexOf("INNER JOIN"));
+			if(joinStr.contains("WHERE"))
+				joinStr = joinStr.substring(0, joinStr.indexOf("WHERE"));
+			if(joinStr.contains("LIMIT"))
+				joinStr = joinStr.substring(0, joinStr.indexOf("LIMIT"));
+			//System.out.println(joinStr);
+			String joinTabel = joinStr.substring(11, joinStr.indexOf("ON"));
+			String joinColumns = joinStr.substring(joinStr.indexOf("ON")+3);
+			String[] joinColumnsArr = joinColumns.split(" \\= ");
+			String[] mainColumnArr = joinColumnsArr[0].split("\\$");
+			String[] joinColumnArr = joinColumnsArr[1].split("\\$");
+			joinBlocks.add(new Join(joinTabel, mainColumnArr[1], joinColumnArr[1]));
+		}
+	}
+	public void parseLeftJoin(){
+		if(checkKeywordSyntax("LEFT JOIN", 2) && checkKeywordSyntax("ON", 10))
+		{
+			String joinStr = this.fullStr.substring(this.fullStr.indexOf("LEFT JOIN")+10);
+			if(joinStr.contains("WHERE"))
+				joinStr = joinStr.substring(0, joinStr.indexOf("WHERE")-1);
+			if(joinStr.contains("LIMIT"))
+				joinStr = joinStr.substring(0, joinStr.indexOf("LIMIT")-1);
+			String joinStrArr[] = joinStr.split(" LEFT JOIN ");
+			//System.out.println(joinStr);
+			for(int i=0; i<joinStrArr.length;i++)
+			{
+				String joinTabel = joinStrArr[i].substring(0, joinStrArr[i].indexOf("ON"));
+				String joinColumns = joinStrArr[i].substring(joinStrArr[i].indexOf("ON")+3);
+				String[] joinColumnsArr = joinColumns.split(" \\= ");
+				String[] mainColumnArr = joinColumnsArr[0].split("\\$");
+				String[] joinColumnArr = joinColumnsArr[1].split("\\$");
+				joinBlocks.add(new Join(joinTabel, mainColumnArr[1], joinColumnArr[1]));
 			}
 		}
 	}

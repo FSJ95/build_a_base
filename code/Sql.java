@@ -25,8 +25,19 @@ public class Sql{
 					Statement statement = new Statement(line);
 					statement.parseSelect();
 					Select select = new Select(statement, defaultconf);
+
 					select.readTable();
-					select.printResult();
+					if(line.contains("LEFT JOIN")){
+						statement.parseLeftJoin();
+						select.leftJoinTables();
+					}
+					if(statement.columnsString.contains("*"))
+					{
+						select.printAllResults();
+					}
+					else{
+						select.printResult();
+					}
 				}
 				else if(line.startsWith("DELETE"))
 				{
@@ -47,7 +58,7 @@ public class Sql{
 					System.out.println("Commands: ");
 					System.out.println("CHARSET=charset");
 					System.out.println("QUIT");
-					System.out.println("SELECT [columns[]] FROM [tablename] WHERE [conditions] LIMIT [int]");
+					System.out.println("SELECT [Column],... FROM [tablename] [LEFT JOIN [tablename] ON [tablename]$[column]= [tablename]$[column] ...] WHERE [conditions] LIMIT [int]");
 					System.out.println("INSERT INTO [tablename] ([Column], [Column]...) VALUES ([Value], [Value]...)");
 					System.out.println("DELETE FROM [tablename] WHERE [conditions]");
 					System.out.println("COLUMNNAMES [TABLE]");

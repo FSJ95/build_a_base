@@ -1,0 +1,13 @@
+SELECT titleId, title, ordering, averageRating, numVotes FROM title.akas.tv_kort.tsv LEFT JOIN title.ratings.tsv ON title.akas.tv_kort.tsv$titleId = title.ratings.tsv$tconst WHERE ordering=1 LIMIT 10
+
+
+SELECT title, averageRating, originalTitle, isAdult, startYear, genres FROM title.akas.tv_kort.tsv LEFT JOIN title.ratings.tsv ON title.akas.tv_kort.tsv$titleId = title.ratings.tsv$tconst LEFT JOIN title.basics_kort.tsv ON title.akas.tv_kort.tsv$titleId = title.basics_kort.tsv$tconst WHERE region=US LIMIT 10
+
+
+SELECT title, averageRating, originalTitle, isAdult, startYear, genres FROM title.akas.tv_kort.tsv
+
+LEFT JOIN title.ratings.tsv ON title.akas.tv_kort.tsv$titleId = title.ratings.tsv$tconst
+
+LEFT JOIN title.basics_kort.tsv ON title.akas.tv_kort.tsv$titleId = title.basics_kort.tsv$tconst
+
+WHERE region=US LIMIT 10
