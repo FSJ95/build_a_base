@@ -2,5 +2,10 @@
 Modulopgave 3 - IMDB datafiler
 
 # How to build
-> javac Sql.java
-> java Sql
+Go to the code folder and type following command:
+```
+$ javac Sql.java
+```
+```
+$ java Sql
+```
