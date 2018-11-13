@@ -1,5 +1,7 @@
 import java.util.*;
 import java.io.*;
+import java.nio.file.*;
+import static java.nio.file.StandardCopyOption.*;
 
 public class Update
 {
@@ -28,6 +30,7 @@ public class Update
 				writer.write(line + System.getProperty("line.separator"));
 				while(sctable.hasNextLine())
 				{
+					//System.out.println("3");
 						BitSet matchBitSet = new BitSet(statement.conditions.size());
 						matchBitSet.clear();
 						line = sctable.nextLine();
@@ -43,6 +46,7 @@ public class Update
 								}
 							}
 						}
+						//System.out.println("2");
 						if(matchBitSet.cardinality() == statement.conditions.size())
 						{
 							for(Column column: this.statement.updateColumns){
@@ -63,7 +67,33 @@ public class Update
 						statement.limit--;
 						writer.write(line + System.getProperty("line.separator"));
 					}
+
+					//System.out.println("1");
+					/*
+					if(fileToRead.exists()){
+            			fileToRead.delete();
+        			}
 					tempWriteFile.renameTo(fileToRead);
+					
+					for (int i = 0; i < 20; i++) {
+					    if (tempWriteFile.renameTo(fileToRead))
+					        break;
+					    System.gc();
+					    Thread.yield();
+					}
+					//this.renameFile(this.statement.table+".tmp", this.statement.table);
+					*/
+					fileToRead.setReadable(true);
+					fileToRead.setWritable(true);
+					tempWriteFile.setReadable(true);
+					tempWriteFile.setWritable(true);
+					tempWriteFile.renameTo(fileToRead);
+					
+					/*
+					Path source = tempWriteFile.toPath();
+					Path newdir = fileToRead.toPath();
+					Files.move(source, newdir, REPLACE_EXISTING);
+					*/
 			}
 			writer.close();
 			if(counter!=0){
@@ -92,5 +122,26 @@ public class Update
 	// 	System.out.println("column: "+condition.conditionArr[0]);
 	// 	System.out.println("value: "+condition.conditionArr[1]);
 	// }
+	}
+	public static void renameFile(String oldName, String newName) throws IOException {
+    File srcFile = new File(oldName);
+    boolean bSucceeded = false;
+    try {
+        File destFile = new File(newName);
+        if (destFile.exists()) {
+            if (!destFile.delete()) {
+                throw new IOException(oldName + " was not successfully renamed to " + newName); 
+            }
+        }
+        if (!srcFile.renameTo(destFile))        {
+            throw new IOException(oldName + " was not successfully renamed to " + newName);
+        } else {
+                bSucceeded = true;
+        }
+    } finally {
+          if (bSucceeded) {
+                srcFile.delete();
+          }
+    }
 	}
 }
