@@ -30,8 +30,9 @@ public class Insert
       }
         try {
           BufferedWriter out = new BufferedWriter(new FileWriter(statement.table, true));
-            out.append("\n"+lineToWrite);
-            out.close();
+          out.append(lineToWrite+System.getProperty("line.separator"));
+          out.close();
+          System.out.println("You have made changes to the database. Rows affected: 1");
         }
         catch (FileNotFoundException e) {
 
@@ -40,23 +41,4 @@ public class Insert
 
         }
   }
-  /*
-public static void main(String[] args)
-  {
-    Writer output;
-    String file = "title.akas.tv_kort.tsv";
-    try{
-      output = new BufferedWriter(new FileWriter(file, true));
-      output.append("\n !");
-      output.close();
-    }
-    catch(FileNotFoundException e)
-    {
-      //e.printStackTrace(e);
-    }
-    catch(IOException e){
-
-    }
-  }
-  */
 }

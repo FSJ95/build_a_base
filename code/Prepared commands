@@ -1,9 +1,21 @@
 SELECT titleId, title, ordering, averageRating, numVotes FROM title.akas.tv_kort.tsv LEFT JOIN title.ratings.tsv ON title.akas.tv_kort.tsv$titleId = title.ratings.tsv$tconst WHERE ordering=1 LIMIT 10
 
 
+
+//Printer valgte kollonner fra forskellige tables
 SELECT title, averageRating, originalTitle, isAdult, startYear, genres FROM title.akas.tv_kort.tsv LEFT JOIN title.ratings.tsv ON title.akas.tv_kort.tsv$titleId = title.ratings.tsv$tconst LEFT JOIN title.basics_kort.tsv ON title.akas.tv_kort.tsv$titleId = title.basics_kort.tsv$tconst WHERE region=US LIMIT 10
 
+//Opdaterer en kollonne
+UPDATE insert.tsv SET (title=enNyTitel) WHERE title=EnTitel
 
+//Indsætter en række
+INSERT INTO insert.tsv (titleId, ordering, title, region, language, types, attributes, isOriginalTitle) VALUES (tt0999981, 2, EnTitel, DK, DA, imdbDisplay, transliterated ISO-LATIN-1 title, 1)
 
+//Sletter rækker
+DELETE FROM insert.tsv WHERE title=EnTitel
+DELETE FROM insert.tsv WHERE title=enNyTitel
+DELETE FROM insert.tsv WHERE region=DK AND language=DA
 
-UPDATE insert.tsv SET (titleId=hej) WHERE ordering=1
+//Indsætter og opdaterer rækken samt indsætter en ny række i samme linje delt op i flere statements
+INSERT INTO insert.tsv (titleId, ordering, title, region, language, types, attributes, isOriginalTitle) VALUES (tt0999981, 2, EnTitel, DK, DA, imdbDisplay, transliterated ISO-LATIN-1 title, 1);UPDATE insert.tsv SET (title=enNyTitel) WHERE title=EnTitel;INSERT INTO insert.tsv (titleId, ordering, title, region, language, types, attributes, isOriginalTitle) VALUES (tt0999981, 2, EnTitel, DK, DA, imdbDisplay, transliterated ISO-LATIN-1 title, 1)
+

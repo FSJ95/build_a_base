@@ -83,6 +83,7 @@ public class Select{
 							}
 						}
 					}
+					sctable.close();
 				}
 				catch(FileNotFoundException e)
 				{
@@ -170,6 +171,7 @@ public class Select{
 					}
 				}
 			}
+			sctable.close();
 		}
 		catch(FileNotFoundException e)
 		{

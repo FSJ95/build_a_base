@@ -1,5 +1,6 @@
 import java.util.*;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 public class Delete
 {
@@ -16,17 +17,9 @@ public class Delete
 	{
 		File fileToRead = new File(this.statement.table);
 		File tempWriteFile = new File(this.statement.table+".tmp");
-		//System.out.println(this.statement.table);
-		//System.out.println(this.statement.limit);
-
-		for(Condition condition : this.statement.conditions){
-			System.out.println("column: "+condition.conditionArr[0]);
-			System.out.println("value: "+condition.conditionArr[1]);
-		}
-
 		try{
 			Scanner sctable = new Scanner(fileToRead, config.getCharset());
-			BufferedWriter writer = new BufferedWriter(new FileWriter(tempWriteFile));
+			BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(tempWriteFile), StandardCharsets.UTF_8));
 			if(sctable.hasNextLine()){
 				String line = sctable.nextLine();
 				String[] fileColumns = line.split("\\t");
@@ -50,17 +43,32 @@ public class Delete
 						}
 						if(matchBitSet.cardinality() == statement.conditions.size())
 						{
-							//System.out.println("Line to remove" +line);
-							//statement.limit--;
 							continue;
 						}
-						//System.out.println("Line to add: "+line);
-						//statement.limit--;
 						writer.write(line + System.getProperty("line.separator"));
 					}
-					tempWriteFile.renameTo(fileToRead);
+					sctable.close();
+					writer.close();
+					//creates a backup before saving changes (overwriting the original table)
+					fileToRead.renameTo(new File(this.statement.table+".bkup"));
+					
+					//Deletes old table in order to save changes
+					new File(this.statement.table).delete();
+
+					if(!tempWriteFile.renameTo(new File(this.statement.table)))
+					{
+						System.out.println("Overwriting failed, please restore table from file: "+this.statement.table+".bkup");
+					}
+					else
+					{
+						//Deletes bkup file if rename was successful
+						new File(this.statement.table+".bkup").delete();
+					}
 			}
-			writer.close();
+			else{
+				sctable.close();
+				writer.close();
+			}
 		}
 		catch(FileNotFoundException e){
 			e.printStackTrace();
@@ -68,39 +76,5 @@ public class Delete
 		catch(IOException e){
 
 		}
-
-
-
-
-
-
-
-	/* try
-	{
-		BufferedReader reader = new BufferedReader(new FileReader(fileToRead));
-		BufferedWriter writer = new BufferedWriter(new FileWriter(fileToRead, true));
-
-		String lineToRemove = "ordering=1";
-		String currentLine;
-
-		while((currentLine = reader.readLine()) != null) {
-			// trim newline when comparing with lineToRemove
-			String trimmedLine = currentLine.trim();
-			if(trimmedLine.equals(lineToRemove)) continue;
-			writer.write(currentLine + System.getProperty("line.separator"));
-		}
-
-		catch (FileNotFoundException e) {
-
-		}
-		catch (IOException e) {
-
-		}
-		writer.close();
-		reader.close();*/
 	}
-
-
-
-
 }
